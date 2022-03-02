@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const userSchema = new mongoose.SchemaType({
+const userSchema = new mongoose.Schema({
     username: {
         type: String,
         required: [true, "Username is required"],
@@ -23,5 +23,7 @@ const userSchema = new mongoose.SchemaType({
         type: Array,
     },
 });
+
+// virtual called 'friendCount' that retrieves the length of the user's 'friends' array field on query
 
 module.exports = mongoose.model("User", userSchema);
