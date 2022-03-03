@@ -1,32 +1,15 @@
-const userData = [
-    {
-        username: "kevin",
-        email: "lacsonky@gmail.com",
-        thoughts: [],
-        friends: [],
-    },
-    {
-        username: "alyssa",
-        email: "alyssa@gmail.com",
-        thoughts: [],
-        friends: [],
-    },
-    {
-        username: "christine",
-        email: "christine@gmail.com",
-        thoughts: [],
-        friends: [],
-    },
-    {
-        username: "darby",
-        email: "darby@gmail.com",
-        thoughts: [],
-        friends: [],
-    },
-    {
-        username: "gino",
-        email: "gino@gmail.com",
-        thoughts: [],
-        friends: [],
-    },
-];
+const connection = require("../config/connection");
+const colors = require("colors");
+const { User, Thought } = require("../models");
+const { userData } = require("./data");
+
+connection.on("error", err => err);
+
+connection.once("open", async () => {
+    console.log("Connected to MongoDB".cyan.underline);
+    await User.deleteMany({});
+    await Thought.deleteMany({});
+
+    await User.collection.insertMany(userData);
+    process.exit(0);
+});
