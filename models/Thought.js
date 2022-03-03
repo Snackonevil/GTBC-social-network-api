@@ -37,5 +37,8 @@ const thoughtSchema = new mongoose.Schema({
 });
 
 // virtual called 'reactionCount' that retrieves the length of the thought's 'reactions' array field on query
+thoughtSchema.virtual("reactionCount").get(() => {
+    return this.reactions.length;
+});
 
 module.exports = mongoose.model("Thought", thoughtSchema);
