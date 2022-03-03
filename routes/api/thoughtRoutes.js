@@ -1,35 +1,32 @@
 // route: /api/thoughts
 const router = require("express").Router();
+const {
+    getThoughts,
+    getThoughtById,
+    updateThought,
+    deleteThought,
+    createThought,
+} = require("../../controllers/thoughtController");
 
 router
     // route: /api/thoughts
     .route("/")
 
     // GET: get all thoughts
-    .get((req, res) => {
-        res.send(`getting all thoughts`);
-    })
+    .get(getThoughts)
 
     // POST: create new thought (push created thought's _id to associated user's 'thoughts' field)
-    .post((req, res) => {
-        res.send(`creating a new thought`);
-    });
+    .post(createThought);
 
 router
     // route: /api/thoughts/:thoughtId
     .route("/:thoughtId")
     // GET: get thought by id
-    .get((req, res) => {
-        res.send(`getting thought with id ${req.params.thoughtId}`);
-    })
+    .get(getThoughtById)
     // PUT: update thought by id
-    .put((req, res) => {
-        res.send(`udating thought with id ${req.params.thoughtId}`);
-    })
+    .put(updateThought)
     // DELETE: delete thought by id
-    .delete((req, res) => {
-        res.send(`deleting thought with id ${req.params.thoughtId}`);
-    });
+    .delete(deleteThought);
 
 router
     // route: api/thoughts/:thoughtId/reactions
