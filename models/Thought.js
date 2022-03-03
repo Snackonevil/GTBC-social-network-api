@@ -1,22 +1,5 @@
 const mongoose = require("mongoose");
-
-const reactionSchema = new mongoose.Schema({
-    reactionId: mongoose.ObjectId,
-    reactionBody: {
-        type: String,
-        required: true,
-        // 280 character max
-    },
-    username: {
-        type: String,
-        required: true,
-    },
-    createdAt: {
-        type: Date,
-        // set default to current timestamp
-        // user getter method to format the timestamp on query
-    },
-});
+const reactionSchema = require("./Reaction");
 
 const thoughtSchema = new mongoose.Schema({
     thoughtText: {
@@ -26,8 +9,7 @@ const thoughtSchema = new mongoose.Schema({
     },
     createdAt: {
         type: Date,
-        // set default to current timestamp
-        // user getter method to format the timestamp on query
+        default: Date.now,
     },
     username: {
         type: String,
