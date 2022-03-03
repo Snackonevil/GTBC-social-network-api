@@ -1,34 +1,30 @@
 // route: api/users
 const router = require("express").Router();
-const { getUsers } = require("../../controllers/userController");
+const {
+    getUsers,
+    getUserById,
+    updateUser,
+    deleteUser,
+    createUser,
+} = require("../../controllers/userController");
 
 router
     // route: /api/users
     .route("/")
     // GET: get all users
-    .get((req, res) => {
-        res.send("getting all users");
-    })
+    .get(getUsers)
     // PUT: create user
-    .post((req, res) => {
-        res.send("creating a user");
-    });
+    .post(createUser);
 
 router
     // route: /api/users/:userId
     .route("/:userId")
     // GET: user by id
-    .get((req, res) => {
-        res.send(`getting user with id ${req.params.userId}`);
-    })
+    .get(getUserById)
     // PUT: update user
-    .put((req, res) => {
-        res.send(`updating user with id ${req.params.userId}`);
-    })
+    .put(updateUser)
     // DELETE: delete user
-    .delete((req, res) => {
-        res.send(`deleting user with id ${req.params.userId}`);
-    });
+    .delete(deleteUser);
 
 router
     // route: /api/users/:userId/friends/:friendId
