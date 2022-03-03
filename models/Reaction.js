@@ -1,11 +1,14 @@
-const mongoose = require("mongoose");
+const { Schema, Types } = require("mongoose");
 
-const reactionSchema = new mongoose.Schema({
-    reactionId: mongoose.ObjectId,
+const reactionSchema = new Schema({
+    reactionId: {
+        type: Schema.Types.ObjectId,
+        default: () => new Types.ObjectId(),
+    },
     reactionBody: {
         type: String,
         required: true,
-        // 280 character max
+        maxLength: 280,
     },
     username: {
         type: String,
