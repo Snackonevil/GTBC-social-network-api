@@ -6,10 +6,10 @@ const { userData } = require("./data");
 connection.on("error", err => err);
 
 connection.once("open", async () => {
-    console.log("Connected to MongoDB".cyan.underline);
     await User.deleteMany({});
     await Thought.deleteMany({});
 
     await User.collection.insertMany(userData);
+    console.log("USERS SEEDED".green);
     process.exit(0);
 });
