@@ -28,11 +28,6 @@ module.exports = {
         try {
             const thought = await Thought.findOne({
                 _id: req.params.thoughtId,
-                $dateToString: {
-                    format: "%H:%M:%S:%L%z",
-                    date: "$date",
-                    timezone: "America/New_York",
-                },
             });
             !thought
                 ? res.status(404).json({ message: "Thought not found" })
@@ -85,11 +80,16 @@ module.exports = {
     },
     deleteReaction: async (req, res) => {
         try {
-            await Thought.findByIdAndUpdate(
+            const thought = await Thought.findOneAndUpdate(
                 { _id: req.params.thoughtId },
                 { $pull: { reactions: { reactionId: req.params.reactionId } } }
             );
-            res.status(200).json({ message: "reaction deleted" });
-        } catch (err) {}
+            !thought
+                ? res.status(404).json({ message: "Thought not found" })
+                : res.status(200).json({ message: "reaction deleted" });
+        } catch (err) {
+            console.log(err);
+            res.status(500).json(err);
+        }
     },
 };
