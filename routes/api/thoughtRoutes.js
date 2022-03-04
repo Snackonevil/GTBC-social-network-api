@@ -6,6 +6,7 @@ const {
     updateThought,
     deleteThought,
     createThought,
+    createReaction,
 } = require("../../controllers/thoughtController");
 
 router
@@ -31,11 +32,7 @@ router
 router
     // route: api/thoughts/:thoughtId/reactions
     // POST: create reaction stored in a single thought's reaction field
-    .post("/:thoughtId/reactions", (req, res) => {
-        res.send(
-            `creating reaction for thought with id ${req.params.thoughtId}`
-        );
-    });
+    .post("/:thoughtId/reactions", createReaction);
 
 router
     // route: api/thoughts/:thoughtId/reactions/:reactionId

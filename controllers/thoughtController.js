@@ -1,9 +1,9 @@
-const { Thought } = require("../models");
+const { Thought, Reaction } = require("../models");
 
 module.exports = {
     getThoughts: async (req, res) => {
         try {
-            const thoughts = Thought.find({});
+            const thoughts = await Thought.find({});
             res.status(200).json(thoughts);
         } catch (err) {
             console.log(err);
@@ -13,7 +13,8 @@ module.exports = {
     createThought: async (req, res) => {
         try {
             const newThought = await Thought.create(req.body);
-            res.statu(201).json(newThought);
+
+            res.status(201).json(newThought);
         } catch (err) {
             console.log(err);
             res.status(500).json(err);
@@ -23,6 +24,11 @@ module.exports = {
         try {
             const thought = await Thought.findOne({
                 _id: req.params.thoughtId,
+                $dateToString: {
+                    format: "%H:%M:%S:%L%z",
+                    date: "$date",
+                    timezone: "America/New_York",
+                },
             });
             !thought
                 ? res.status(404).json({ message: "Thought not found" })
@@ -54,6 +60,20 @@ module.exports = {
             !thought
                 ? res.status(404).json({ message: "Thought not found" })
                 : res.status(200).json({ message: "Thought deleted" });
+        } catch (err) {
+            console.log(err);
+            res.status(500).json(err);
+        }
+    },
+    createReaction: async (req, res) => {
+        try {
+            const newReaction = await Thought.findOneAndUpdate(
+                { _id: req.params.thoughtId },
+                { $push: { reactions: req.body } }
+            );
+            newReaction
+                ? res.status(200).json({ message: "reaction added" })
+                : res.status(404).json({ message: "reaction not added" });
         } catch (err) {
             console.log(err);
             res.status(500).json(err);
