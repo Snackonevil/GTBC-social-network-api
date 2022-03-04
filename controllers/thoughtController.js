@@ -79,4 +79,13 @@ module.exports = {
             res.status(500).json(err);
         }
     },
+    deleteReaction: async (req, res) => {
+        try {
+            await Thought.findByIdAndUpdate(
+                { _id: req.params.thoughtId },
+                { $pull: { reactions: { reactionId: req.params.reactionId } } }
+            );
+            res.status(200).json({ message: "reaction deleted" });
+        } catch (err) {}
+    },
 };

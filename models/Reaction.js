@@ -2,7 +2,7 @@ const { Schema, Types } = require("mongoose");
 
 function formatDate(date) {
     let formattedDate = new Date(date);
-    return formattedDate.toLocalDateString();
+    return formattedDate.toDateString();
 }
 
 const reactionSchema = new Schema(
