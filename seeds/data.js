@@ -1,30 +1,30 @@
 const userData = [
     {
-        username: "kevin",
+        username: "Kevin",
         email: "lacsonky@gmail.com",
         thoughts: [],
         friends: [],
     },
     {
-        username: "alyssa",
+        username: "Alyssa",
         email: "alyssa@gmail.com",
         thoughts: [],
         friends: [],
     },
     {
-        username: "christine",
+        username: "Christine",
         email: "christine@gmail.com",
         thoughts: [],
         friends: [],
     },
     {
-        username: "darby",
+        username: "Darby",
         email: "darby@gmail.com",
         thoughts: [],
         friends: [],
     },
     {
-        username: "gino",
+        username: "Gino",
         email: "gino@gmail.com",
         thoughts: [],
         friends: [],
