@@ -17,7 +17,7 @@ router
     // GET: get all thoughts
     .get(getThoughts)
 
-    // POST: create new thought (push created thought's _id to associated user's 'thoughts' field)
+    // POST: create new thought
     .post(createThought);
 
 router

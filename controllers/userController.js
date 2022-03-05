@@ -1,3 +1,4 @@
+// USER CONTROLLER
 const { User, Thought } = require("../models");
 
 module.exports = {
@@ -6,8 +7,8 @@ module.exports = {
             const users = await User.find({});
             res.status(200).json(users);
         } catch (err) {
-            res.status(500).json(err);
             console.log(err);
+            res.status(500).json(err);
         }
     },
     getUserById: async (req, res) => {
@@ -17,8 +18,8 @@ module.exports = {
                 ? res.status(404).json({ message: `User not found` })
                 : res.status(200).json(user);
         } catch (err) {
-            res.status(500).json(err);
             console.log(err);
+            res.status(500).json(err);
         }
     },
     updateUser: async (req, res) => {
@@ -31,8 +32,8 @@ module.exports = {
                 ? res.status(404).json({ message: "User not found" })
                 : res.status(202).json({ message: "User updated" });
         } catch (err) {
-            res.status(500).json(err);
             console.log(err);
+            res.status(500).json(err);
         }
     },
     deleteUser: async (req, res) => {
@@ -47,8 +48,8 @@ module.exports = {
                 message: "User and user's thoughts have been deleted",
             });
         } catch (err) {
-            res.status(500).json(err);
             console.log(err);
+            res.status(500).json(err);
         }
     },
     createUser: async (req, res) => {
@@ -56,12 +57,13 @@ module.exports = {
             const newUser = await User.create(req.body);
             res.status(201).json(newUser);
         } catch (err) {
-            res.status(500).json(err);
             console.log(err);
+            res.status(500).json(err);
         }
     },
     addFriend: async (req, res) => {
         try {
+            // Check if friend exists as user
             const friend = await User.findOne({ _id: req.params.friendId });
             if (!friend) {
                 res.status(404).json({
@@ -69,13 +71,15 @@ module.exports = {
                 });
                 return;
             }
-            const checkFriend = await User.findOne({
+
+            // Check if friend id is in user's friends array
+            const alreadyFriends = await User.findOne({
                 _id: req.params.userId,
                 friends: req.params.friendId,
             });
 
             // Check if friend Id already exists in user.friends array
-            if (checkFriend) {
+            if (alreadyFriends) {
                 console.log("already friends");
                 res.status(400).json({ message: "Already friends" });
             } else {
@@ -88,12 +92,13 @@ module.exports = {
                     : res.status(200).json({ message: "Friend added" });
             }
         } catch (err) {
-            res.status(500).json(err);
             console.log(err);
+            res.status(500).json(err);
         }
     },
     deleteFriend: async (req, res) => {
         try {
+            // Confirm that users are friends
             const checkFriend = await User.findOne({
                 _id: req.params.userId,
                 friends: req.params.friendId,
@@ -108,8 +113,8 @@ module.exports = {
                 res.status(400).json({ message: "Users are not friends" });
             }
         } catch (err) {
-            res.status(500).json(err);
             console.log(err);
+            res.status(500).json(err);
         }
     },
 };
