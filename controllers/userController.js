@@ -38,12 +38,14 @@ module.exports = {
     },
     deleteUser: async (req, res) => {
         try {
+            // Validate user exists
             const user = await User.findOneAndDelete({
                 _id: req.params.userId,
             });
             !user
                 ? res.status(404).json({ message: "User not found" })
-                : await Thought.deleteMany({ _id: { $in: user.thoughts } });
+                : // Delete from thoughts based on deleted user thoughts array
+                  await Thought.deleteMany({ _id: { $in: user.thoughts } });
             res.status(200).json({
                 message: "User and user's thoughts have been deleted",
             });
@@ -103,6 +105,7 @@ module.exports = {
                 _id: req.params.userId,
                 friends: req.params.friendId,
             });
+            // If friends, remove id from friends array
             if (checkFriend) {
                 await User.findOneAndUpdate(
                     { _id: req.params.userId },
