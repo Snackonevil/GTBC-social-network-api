@@ -62,9 +62,15 @@ module.exports = {
             const thought = await Thought.findOneAndDelete({
                 _id: req.params.thoughtId,
             });
-            !thought
-                ? res.status(404).json({ message: "Thought not found" })
-                : res.status(200).json({ message: "Thought deleted" });
+            if (!thought) {
+                res.status(404).json({ message: "Thought not found" });
+            } else {
+                await User.findOneAndUpdate(
+                    { username: thought.username },
+                    { $pull: { thoughts: thought._id } }
+                );
+                res.status(200).json({ message: "Thought deleted" });
+            }
         } catch (err) {
             handleError(res, err);
         }
