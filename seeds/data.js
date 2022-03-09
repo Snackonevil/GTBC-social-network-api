@@ -31,4 +31,31 @@ const userData = [
     },
 ];
 
-module.exports = { userData };
+const thoughtData = [
+    {
+        username: "Kevin",
+        thoughtText: "My name is Kevin and this is a thought I am having",
+    },
+    {
+        username: "Kevin",
+        thoughtText: "This is another thought that I am having",
+    },
+    {
+        username: "Alyssa",
+        thoughtText: "My name is Alyssa and this is a thought I am having",
+    },
+    {
+        username: "Gino",
+        thoughtText: "My name is Gino and this is a thought I am having",
+    },
+    {
+        username: "Darby",
+        thoughtText: "My name is Darby and this is a thought I am having",
+    },
+    {
+        username: "Darby",
+        thoughtText: "My name is Darby and this is a thought I am having",
+    },
+];
+
+module.exports = { userData, thoughtData };
