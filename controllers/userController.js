@@ -1,16 +1,22 @@
 // USER CONTROLLER
 const { User, Thought } = require("../models");
 
+const handleError = (res, err) => {
+    console.log(err);
+    res.status(500).json({ message: err.message });
+};
+
 module.exports = {
+    // Get all users
     getUsers: async (req, res) => {
         try {
             const users = await User.find({});
             res.status(200).json(users);
         } catch (err) {
-            console.log(err);
-            res.status(500).json(err);
+            handleError(res, err);
         }
     },
+    // Get user by Id
     getUserById: async (req, res) => {
         try {
             const user = await User.findOne({ _id: req.params.userId });
@@ -18,10 +24,10 @@ module.exports = {
                 ? res.status(404).json({ message: `User not found` })
                 : res.status(200).json(user);
         } catch (err) {
-            console.log(err);
-            res.status(500).json(err);
+            handleError(res, err);
         }
     },
+    // Update user by Id
     updateUser: async (req, res) => {
         try {
             const updatedUser = await User.findOneAndUpdate(
@@ -32,10 +38,10 @@ module.exports = {
                 ? res.status(404).json({ message: "User not found" })
                 : res.status(202).json({ message: "User updated" });
         } catch (err) {
-            console.log(err);
-            res.status(500).json(err);
+            handleError(res, err);
         }
     },
+    // Delete user by id
     deleteUser: async (req, res) => {
         try {
             // Validate user exists
@@ -44,25 +50,25 @@ module.exports = {
             });
             !user
                 ? res.status(404).json({ message: "User not found" })
-                : // Delete from thoughts based on deleted user thoughts array
+                : // Delete from thoughts based on deleted user's thought Id array
                   await Thought.deleteMany({ _id: { $in: user.thoughts } });
             res.status(200).json({
                 message: "User and user's thoughts have been deleted",
             });
         } catch (err) {
-            console.log(err);
-            res.status(500).json(err);
+            handleError(res, err);
         }
     },
+    // Create user
     createUser: async (req, res) => {
         try {
             const newUser = await User.create(req.body);
             res.status(201).json(newUser);
         } catch (err) {
-            console.log(err);
-            res.status(500).json(err);
+            handleError(res, err);
         }
     },
+    // Add user id to other user's friends array
     addFriend: async (req, res) => {
         try {
             // Check if friend exists as user
@@ -94,10 +100,10 @@ module.exports = {
                     : res.status(200).json({ message: "Friend added" });
             }
         } catch (err) {
-            console.log(err);
-            res.status(500).json(err);
+            handleError(res, err);
         }
     },
+    // Remove user's id from other user's friend array
     deleteFriend: async (req, res) => {
         try {
             // Confirm that users are friends
@@ -116,8 +122,7 @@ module.exports = {
                 res.status(400).json({ message: "Users are not friends" });
             }
         } catch (err) {
-            console.log(err);
-            res.status(500).json(err);
+            handleError(res, err);
         }
     },
 };

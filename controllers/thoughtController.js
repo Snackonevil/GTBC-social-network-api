@@ -1,16 +1,22 @@
 // THOUGHT CONTROLLER
 const { Thought, User } = require("../models");
 
+const handleError = (res, err) => {
+    console.log(err);
+    res.status(500).json({ message: err.message });
+};
+
 module.exports = {
+    // Get all thoughts
     getThoughts: async (req, res) => {
         try {
             const thoughts = await Thought.find({});
             res.status(200).json(thoughts);
         } catch (err) {
-            console.log(err);
-            res.status(500).json(err.message);
+            handleError(res, err);
         }
     },
+    // Create thought
     createThought: async (req, res) => {
         try {
             const newThought = await Thought.create(req.body);
@@ -20,10 +26,10 @@ module.exports = {
             );
             res.status(201).json(newThought);
         } catch (err) {
-            console.log(err);
-            res.status(500).json(err.message);
+            handleError(res, err);
         }
     },
+    // Get thought by Id
     getThoughtById: async (req, res) => {
         try {
             const thought = await Thought.findOne({
@@ -33,10 +39,10 @@ module.exports = {
                 ? res.status(404).json({ message: "Thought not found" })
                 : res.status(200).json(thought);
         } catch (err) {
-            console.log(err);
-            res.status(500).json(err.message);
+            handleError(res, err);
         }
     },
+    // Update thought by Id
     updateThought: async (req, res) => {
         try {
             const updatedThought = await Thought.findOneAndUpdate(
@@ -47,10 +53,10 @@ module.exports = {
                 ? res.status(404).json({ message: "Thought not found" })
                 : res.status(202).json({ message: "Thought updated" });
         } catch (err) {
-            console.log(err);
-            res.status(500).json(err);
+            handleError(res, err);
         }
     },
+    // Delete thought by Id
     deleteThought: async (req, res) => {
         try {
             const thought = await Thought.findOneAndDelete({
@@ -60,10 +66,10 @@ module.exports = {
                 ? res.status(404).json({ message: "Thought not found" })
                 : res.status(200).json({ message: "Thought deleted" });
         } catch (err) {
-            console.log(err);
-            res.status(500).json(err.message);
+            handleError(res, err);
         }
     },
+    // Create reaction and push to thought's reaction array
     createReaction: async (req, res) => {
         try {
             const newReaction = await Thought.findOneAndUpdate(
@@ -74,10 +80,10 @@ module.exports = {
                 ? res.status(200).json({ message: "reaction added" })
                 : res.status(404).json({ message: "reaction not added" });
         } catch (err) {
-            console.log(err);
-            res.status(500).json(err.message);
+            handleError(res, err);
         }
     },
+    // Delete reaction's Id from thought's reaction array
     deleteReaction: async (req, res) => {
         try {
             const thought = await Thought.findOneAndUpdate(
@@ -88,8 +94,7 @@ module.exports = {
                 ? res.status(404).json({ message: "Thought not found" })
                 : res.status(200).json({ message: "Reaction deleted" });
         } catch (err) {
-            console.log(err);
-            res.status(500).json(err.message);
+            handleError(res, err);
         }
     },
 };

@@ -49,8 +49,8 @@ const thoughtData = [
         thoughtText: "My name is Gino and this is a thought I am having",
     },
     {
-        username: "Darby",
-        thoughtText: "My name is Darby and this is a thought I am having",
+        username: "Christine",
+        thoughtText: "My name is Christine and this is a thought I am having",
     },
     {
         username: "Darby",
