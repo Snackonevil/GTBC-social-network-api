@@ -11,7 +11,7 @@ GitHub: [Snackonevil](https://github.com/Snackonevil)
 
 API for social network with 'users', 'thoughts', and 'reactions'. Uses Express for server/routing and MongoDB for a database with Mongoose as ODM. See links below for codebase and walkthrough video demonstrating requests using Postman.
 
-[CODE](https://github.com/Snackonevil/GTBC-social-network-api) | [Walkthrough Video]()
+[CODE](https://github.com/Snackonevil/GTBC-social-network-api) | [Walkthrough Video](https://drive.google.com/file/d/1JWaKVpWEhJmCvDYvKXS5rKD969e-S3wP/view)
 
 ---
 
